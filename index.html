@@ -1,155 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Invitación de Graduación</title>
+<meta charset="UTF-8">
+<title>Graduation Party</title>
 
-  <link href="https://fonts.cdnfonts.com/css/graduation-2" rel="stylesheet">
+<!-- FONT GRADUATION -->
+<link href="https://fonts.cdnfonts.com/css/graduation-2" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #C8B273;
-      font-family: 'Graduation', sans-serif;
-      overflow: hidden;
-      text-align: center;
-      color: #1a1a1a;
-    }
+<!-- MONTSERRAT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
-    .container {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 520px;
-    }
+<style>
 
-    h1 {
-      font-size: 56px;
-      margin-bottom: 10px;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  background: #C8B273;
+  overflow: hidden;
+}
 
-    .subtitle {
-      font-size: 22px;
-      margin-bottom: 25px;
-    }
+/* ⭐ ESTRELLAS (FONDO) */
+.star {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: fall 2.5s linear forwards;
+  z-index: 1;
+}
 
-    .card {
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px;
-    }
+@keyframes fall {
+  to {
+    transform: translateY(calc(100vh - 180px)) scale(0);
+    opacity: 0;
+  }
+}
 
-    .info {
-      font-size: 24px;
-      margin: 12px 0;
-    }
+/* 📱 CONTENEDOR CENTRAL */
+.wrapper {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    /* ⭐ ESTRELLAS GRANDES */
-    .star {
-      position: fixed;
-      width: 30px;
-      height: 30px;
-      background: #000;
-      clip-path: polygon(
-        50% 0%,
-        61% 35%,
-        98% 35%,
-        68% 57%,
-        79% 91%,
-        50% 70%,
-        21% 91%,
-        32% 57%,
-        2% 35%,
-        39% 35%
-      );
-      animation: fade 1.6s linear forwards;
-      pointer-events: none;
-    }
+/* 🪟 GLASS CARD */
+.card {
+  width: 320px;
+  padding: 30px;
+  border-radius: 20px;
 
-    @keyframes fade {
-      to {
-        transform: translateY(35px) scale(0);
-        opacity: 0;
-      }
-    }
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-    /* 🖤 TIRA INFERIOR PERFECTA */
-    .ticker {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #000;
-      overflow: hidden;
-      padding: 12px 0;
-    }
+  color: white;
+  text-align: center;
+}
 
-    .ticker-content {
-      display: inline-block;
-      white-space: nowrap;
-      color: #C8B273;
-      font-size: 20px;
-      font-family: 'Graduation', sans-serif;
-      animation: scroll 10s linear infinite;
-    }
+/* 🎓 TÍTULO */
+.title {
+  font-family: 'Graduation', sans-serif;
+  font-size: 48px;
+  margin-bottom: 15px;
+}
 
-    @keyframes scroll {
-      from { transform: translateX(0%); }
-      to { transform: translateX(-50%); }
-    }
-  </style>
+/* ✍️ CONTENIDO */
+.info {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* BOTONES */
+.button {
+  margin-top: 15px;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+/* BOTÓN SECUNDARIO */
+.secondary {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Graduation Party 🎓</h1>
-    <p class="subtitle">You’re invited to celebrate with me</p>
+<!-- ⭐ CONTENIDO -->
+<div class="wrapper">
+  <div class="card">
 
-    <div class="card">
-      <p class="info">📅 June 15, 2026</p>
-      <p class="info">⏰ 6:00 PM</p>
-      <p class="info">📍 Tucson, Arizona</p>
-    </div>
+    <div class="title">Grad Party 🎓</div>
+
+    <div class="info">📅 June 15, 2026</div>
+    <div class="info">⏰ 6:00 PM</div>
+    <div class="info">📍 Tucson, Arizona</div>
+
+    <a class="button" href="https://maps.google.com" target="_blank">
+      Dirección
+    </a>
+
+    <br>
+
+    <a class="button secondary" href="#">
+      Dress Code
+    </a>
+
   </div>
+</div>
 
-  <!-- 🖤 TICKER INFINITO SIN ESPACIOS -->
-  <div class="ticker">
-    <div class="ticker-content">
-      Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★
-    </div>
-  </div>
+<!-- ⭐ SCRIPT ESTRELLAS -->
+<script>
+function createStar() {
+  const star = document.createElement("div");
+  star.className = "star";
 
-  <!-- ⭐ ESTRELLAS -->
-  <script>
-    function createStar(x, y) {
-      const star = document.createElement("div");
-      star.className = "star";
+  const x = Math.random() * window.innerWidth;
+  star.style.left = x + "px";
+  star.style.top = "0px";
 
-      const mid = window.innerHeight / 2;
-      const randomY = Math.random() * mid;
+  document.body.appendChild(star);
 
-      star.style.left = x + "px";
-      star.style.top = (y || randomY) + "px";
+  setTimeout(() => {
+    star.remove();
+  }, 2500);
+}
 
-      document.body.appendChild(star);
-
-      setTimeout(() => star.remove(), 1600);
-    }
-
-    document.addEventListener("mousemove", (e) => {
-      createStar(e.clientX, e.clientY);
-    });
-
-    setInterval(() => {
-      const x = Math.random() * window.innerWidth;
-      createStar(x);
-    }, 200);
-  </script>
+setInterval(createStar, 180);
+</script>
 
 </body>
 </html>
