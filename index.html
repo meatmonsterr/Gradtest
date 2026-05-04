@@ -48,7 +48,7 @@
       margin: 12px 0;
     }
 
-    /* ⭐ ESTRELLAS GRANDES */
+    /* ⭐ ESTRELLAS 30px */
     .star {
       position: fixed;
       width: 30px;
@@ -77,7 +77,7 @@
       }
     }
 
-    /* 🖤 TIRA ESTILO NOTICIAS (solo ancho del texto) */
+    /* 🖤 TICKER CENTRADO */
     .ticker-wrapper {
       position: fixed;
       bottom: 0;
@@ -87,22 +87,29 @@
     }
 
     .ticker-box {
-      display: inline-block;
       background: #000;
-      padding: 10px 20px;
-      text-align: center;
+      padding: 10px 25px;
+      overflow: hidden;
+      display: inline-block;
     }
 
     .ticker-line {
-      height: 3px;
+      height: 2px;
       background: #C8B273;
-      margin: 5px 0;
+      margin: 6px 0;
     }
 
-    .ticker-text {
+    .ticker-content {
+      white-space: nowrap;
+      display: inline-block;
       color: #C8B273;
       font-size: 20px;
-      white-space: nowrap;
+      animation: scroll 8s linear infinite;
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
     }
   </style>
 </head>
@@ -120,14 +127,14 @@
     </div>
   </div>
 
-  <!-- 🖤 TIRA CENTRADA -->
+  <!-- 🖤 TICKER CENTRADO CON ANIMACIÓN -->
   <div class="ticker-wrapper">
     <div class="ticker-box">
 
       <div class="ticker-line"></div>
 
-      <div class="ticker-text">
-        Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★
+      <div class="ticker-content">
+        Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★
       </div>
 
       <div class="ticker-line"></div>
