@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <title>Graduation Party</title>
 
-<!-- FONT GRADUATION -->
+<!-- Graduation font -->
 <link href="https://fonts.cdnfonts.com/css/graduation-2" rel="stylesheet">
 
-<!-- MONTSERRAT -->
+<!-- Montserrat -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
@@ -16,28 +16,19 @@
 
 body {
   margin: 0;
-  padding: 0;
   background: #C8B273;
   overflow: hidden;
 }
 
-/* ⭐ ESTRELLAS (FONDO) */
+/* ⭐ ESTRELLAS */
 .star {
   position: fixed;
   width: 30px;
   height: 30px;
   background: #000;
   clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
+    50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+    50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
   );
   animation: fall 2.5s linear forwards;
   z-index: 1;
@@ -50,7 +41,7 @@ body {
   }
 }
 
-/* 📱 CONTENEDOR CENTRAL */
+/* 📱 CONTENEDOR */
 .wrapper {
   position: relative;
   z-index: 2;
@@ -60,46 +51,47 @@ body {
   justify-content: center;
 }
 
-/* 🪟 GLASS CARD */
+/* 🪟 CARD MÁS GRANDE */
 .card {
-  width: 320px;
-  padding: 30px;
-  border-radius: 20px;
+  width: 380px;
+  padding: 40px;
+  border-radius: 25px;
 
   background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 
   color: white;
   text-align: center;
 }
 
-/* 🎓 TÍTULO */
+/* 🎓 TITULO */
 .title {
   font-family: 'Graduation', sans-serif;
-  font-size: 48px;
-  margin-bottom: 15px;
+  font-size: 56px;
+  margin-bottom: 20px;
 }
 
-/* ✍️ CONTENIDO */
+/* ✍️ INFO */
 .info {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 18px;
-  margin: 10px 0;
+  font-size: 20px;
+  margin: 12px 0;
 }
 
 /* BOTONES */
 .button {
   margin-top: 15px;
   display: inline-block;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px 22px;
+  border-radius: 25px;
   background: #fff;
   color: #000;
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 /* BOTÓN SECUNDARIO */
@@ -114,15 +106,17 @@ body {
 
 <body>
 
-<!-- ⭐ CONTENIDO -->
 <div class="wrapper">
   <div class="card">
 
     <div class="title">Grad Party 🎓</div>
 
-    <div class="info">📅 June 15, 2026</div>
-    <div class="info">⏰ 6:00 PM</div>
-    <div class="info">📍 Tucson, Arizona</div>
+    <!-- CONTENIDO DINÁMICO -->
+    <div id="content">
+      <div class="info">📅 June 15, 2026</div>
+      <div class="info">⏰ 6:00 PM</div>
+      <div class="info">📍 Tucson, Arizona</div>
+    </div>
 
     <a class="button" href="https://maps.google.com" target="_blank">
       Dirección
@@ -130,14 +124,14 @@ body {
 
     <br>
 
-    <a class="button secondary" href="#">
+    <button class="button secondary" onclick="showDressCode()">
       Dress Code
-    </a>
+    </button>
 
   </div>
 </div>
 
-<!-- ⭐ SCRIPT ESTRELLAS -->
+<!-- ⭐ SCRIPT -->
 <script>
 function createStar() {
   const star = document.createElement("div");
@@ -149,12 +143,18 @@ function createStar() {
 
   document.body.appendChild(star);
 
-  setTimeout(() => {
-    star.remove();
-  }, 2500);
+  setTimeout(() => star.remove(), 2500);
 }
 
 setInterval(createStar, 180);
+
+/* 🎯 CAMBIO DE CONTENIDO */
+function showDressCode() {
+  document.getElementById("content").innerHTML = `
+    <div class="info">Color: Negro y Blanco</div>
+    <div class="info">Semi formal</div>
+  `;
+}
 </script>
 
 </body>
