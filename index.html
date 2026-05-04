@@ -13,8 +13,8 @@
       background: #C8B273;
       font-family: 'Graduation', sans-serif;
       overflow: hidden;
-      color: #1a1a1a;
       text-align: center;
+      color: #1a1a1a;
     }
 
     .container {
@@ -23,16 +23,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90%;
-      max-width: 500px;
+      max-width: 520px;
     }
 
     h1 {
-      font-size: 48px;
+      font-size: 56px;
       margin-bottom: 10px;
     }
 
     .subtitle {
-      font-size: 18px;
+      font-size: 22px;
       margin-bottom: 25px;
     }
 
@@ -40,19 +40,19 @@
       background: rgba(255,255,255,0.25);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      padding: 25px;
+      padding: 30px;
     }
 
     .info {
-      margin: 10px 0;
-      font-size: 18px;
+      font-size: 24px;
+      margin: 12px 0;
     }
 
-    /* ⭐ ESTRELLAS */
+    /* ⭐ ESTRELLAS GRANDES */
     .star {
       position: fixed;
-      width: 10px;
-      height: 10px;
+      width: 30px;
+      height: 30px;
       background: #000;
       clip-path: polygon(
         50% 0%,
@@ -66,27 +66,24 @@
         2% 35%,
         39% 35%
       );
-      animation: fade 1.5s linear forwards;
+      animation: fade 1.6s linear forwards;
       pointer-events: none;
     }
 
     @keyframes fade {
       to {
-        transform: translateY(30px) scale(0);
+        transform: translateY(35px) scale(0);
         opacity: 0;
       }
     }
 
-    /* 🖤 TIRA INFERIOR */
+    /* 🖤 TIRA INFERIOR PERFECTA */
     .ticker {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       background: #000;
-      color: #C8B273;
-      font-size: 18px;
-      white-space: nowrap;
       overflow: hidden;
       padding: 12px 0;
     }
@@ -94,12 +91,15 @@
     .ticker-content {
       display: inline-block;
       white-space: nowrap;
-      animation: scroll 12s linear infinite;
+      color: #C8B273;
+      font-size: 20px;
+      font-family: 'Graduation', sans-serif;
+      animation: scroll 10s linear infinite;
     }
 
     @keyframes scroll {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
+      from { transform: translateX(0%); }
+      to { transform: translateX(-50%); }
     }
   </style>
 </head>
@@ -117,14 +117,14 @@
     </div>
   </div>
 
-  <!-- 🖤 TICKER -->
+  <!-- 🖤 TICKER INFINITO SIN ESPACIOS -->
   <div class="ticker">
     <div class="ticker-content">
-      Nombre ⭐ Nombre ⭐ Nombre ⭐ Nombre ⭐ Nombre ⭐ Nombre ⭐ Nombre ⭐ Nombre ⭐
+      Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★ Nombre ★
     </div>
   </div>
 
-  <!-- ⭐ STARS -->
+  <!-- ⭐ ESTRELLAS -->
   <script>
     function createStar(x, y) {
       const star = document.createElement("div");
@@ -138,7 +138,7 @@
 
       document.body.appendChild(star);
 
-      setTimeout(() => star.remove(), 1500);
+      setTimeout(() => star.remove(), 1600);
     }
 
     document.addEventListener("mousemove", (e) => {
@@ -148,7 +148,7 @@
     setInterval(() => {
       const x = Math.random() * window.innerWidth;
       createStar(x);
-    }, 250);
+    }, 200);
   </script>
 
 </body>
