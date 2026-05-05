@@ -2,85 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Invitation</title>
-
-<!-- FONT BOTÓN -->
-<style>
-@import url(https://db.onlinewebfonts.com/c/0930b33e3b23483beec8d94d6eb3073d?family=F1589_Humane_Bordeaux+W00+Normal);
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación</title>
 
 <style>
 
-body {
-  margin: 0;
-  background: black;
-  overflow: hidden;
-}
-
-/* PANTALLAS */
-.screen {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.hidden {
-  display: none;
-}
-
-/* 📩 SOBRE */
-.envelope {
-  width: 700px;
-  cursor: pointer;
-}
-
-/* 🎴 TARJETA */
-.card-img {
-  width: 770px;
-  margin-bottom: 30px;
-  cursor: pointer;
-  transition: transform 0.25s ease, filter 0.25s ease;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-}
-
-.card-img {
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* 🖱️ SOLO MOUSE (hover real) */
-@media (hover: hover) and (pointer: fine) {
-  .card-img:hover {
-    transform: scale(0.95);
-    filter: brightness(0.9);
-  }
-}
-
-/* 📱 MÓVIL / CLICK (tap animation) */
-.card-img:active {
-  transform: scale(0.92);
-  filter: brightness(1.15);
-  box-shadow:
-    0 0 12px rgba(200, 178, 115, 0.6),
-    0 0 25px rgba(200, 178, 115, 0.4);
-}
-
-/* BOTÓN */
-.button {
-  padding: 12px 30px;
-  border-radius: 30px;
-  background: white;
-  color: black;
-  text-decoration: none;
-  font-size: 18px;
-  font-family: "F1589_Humane_Bordeaux W00 Normal";
-  font-style: italic;
-}
-
-/* ⭐ ESTRELLAS DORADAS */
+/* ⭐ ESTRELLA */
 .star {
   position: fixed;
   pointer-events: none;
@@ -100,38 +27,81 @@ body {
     39% 35%
   );
   opacity: 0.9;
-  animation: fade 1.2s linear forwards;
+  z-index: 1;
+  animation: fall linear forwards;
 }
 
-@keyframes fade {
+@keyframes fall {
   to {
-    transform: translateY(100vh) scale(0);
+    transform: translateY(120vh) scale(0.3);
     opacity: 0;
   }
+}
+
+/* 📱 PANTALLAS */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 🎴 IMÁGENES */
+.envelope, .card-img {
+  width: 80%;
+  max-width: 400px;
+  display: block;
+  margin: auto;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* 🖱️ HOVER SOLO PC */
+@media (hover: hover) and (pointer: fine) {
+  .card-img:hover {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+  }
+}
+
+/* 📱 TAP */
+.card-img:active {
+  transform: scale(0.92);
+  filter: brightness(1.15);
+  box-shadow:
+    0 0 12px rgba(200, 178, 115, 0.6),
+    0 0 25px rgba(200, 178, 115, 0.4);
+}
+
+/* 🎴 INVITACIÓN ENCIMA */
+#invitation {
+  position: relative;
+  z-index: 10;
+}
+
+#home {
+  position: relative;
+  z-index: 10;
+}
+
+/* 🔘 BOTÓN */
+.button {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  text-decoration: none;
+  background: #C8B273;
+  padding: 10px 20px;
+  border-radius: 10px;
 }
 
 </style>
 </head>
 
 <body>
-
-<!-- ⭐ ESTRELLAS -->
-<script>
-function createStar() {
-  const star = document.createElement("div");
-  star.className = "star";
-
-  const x = Math.random() * window.innerWidth;
-  star.style.left = x + "px";
-  star.style.top = "0px";
-
-  document.body.appendChild(star);
-
-  setTimeout(() => star.remove(), 2500);
-}
-
-setInterval(createStar, 180);
-</script>
 
 <!-- 📩 PANTALLA 1 -->
 <div id="home" class="screen">
@@ -141,19 +111,70 @@ setInterval(createStar, 180);
 <!-- 🎴 PANTALLA 2 -->
 <div id="invitation" class="screen hidden">
 
-  <img src="Untitled1421_20260504195117.png" class="card-img">
+  <img src="Untitled1421_20260504195117.png" class="card-img" onclick="inviteStars(event)">
 
-  <a class="button" href="https://maps.app.goo.gl/NvGtxdGL9MqS9AKJ7?g_st=ic" target="_blank">
+  <a class="button" href="https://maps.google.com" target="_blank">
     Dirección
   </a>
 
 </div>
 
 <script>
+
+/* ⭐ CREAR ESTRELLA */
+function createStar(x, y, behind = false) {
+  const star = document.createElement("div");
+  star.className = "star";
+
+  star.style.left = x + "px";
+  star.style.top = y + "px";
+
+  // 🌟 más lento
+  const duration = Math.random() * 3 + 3;
+  star.style.animationDuration = duration + "s";
+
+  if (behind) {
+    star.style.zIndex = "0";
+  }
+
+  document.body.appendChild(star);
+
+  setTimeout(() => star.remove(), duration * 1000);
+}
+
+/* 📱 estrellas al tocar pantalla */
+document.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  createStar(t.clientX, t.clientY);
+});
+
+/* 🖱️ también en PC */
+document.addEventListener("click", (e) => {
+  createStar(e.clientX, e.clientY);
+});
+
+/* 🎴 abrir invitación + explosión */
 function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
+
+  // ⭐ explosión detrás
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      createStar(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight,
+        true
+      );
+    }, i * 70);
+  }
 }
+
+/* 📱 estrellas al tocar la carta */
+function inviteStars(e) {
+  createStar(e.clientX, e.clientY, true);
+}
+
 </script>
 
 </body>
