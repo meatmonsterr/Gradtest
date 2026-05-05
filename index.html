@@ -40,7 +40,7 @@ body {
 
 /* 🎴 TARJETA */
 .card-img {
-  width: 800px;
+  width: 950px;
   margin-bottom: 30px;
   cursor: pointer;
   transition: transform 0.25s ease, filter 0.25s ease;
@@ -148,13 +148,13 @@ body {
     Dirección
   </a>
 
-</div>
+  <!-- 🎵 BOTONES MÚSICA (SOLO AQUÍ) -->
+  <div class="music-controls">
+    <button class="music-btn" onclick="playMusic()">Play</button>
+    <button class="music-btn" onclick="pauseMusic()">Pause</button>
+    <button class="music-btn" onclick="restartMusic()">Restart</button>
+  </div>
 
-<!-- 🎵 BOTONES MÚSICA -->
-<div class="music-controls">
-  <button class="music-btn" onclick="playMusic()">Play</button>
-  <button class="music-btn" onclick="pauseMusic()">Pause</button>
-  <button class="music-btn" onclick="restartMusic()">Restart</button>
 </div>
 
 <script>
