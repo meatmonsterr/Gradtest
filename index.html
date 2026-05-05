@@ -67,6 +67,33 @@ body {
   font-size: 18px;
   font-family: "F1589_Humane_Bordeaux W00 Normal";
   font-style: italic;
+  transition: all 0.3s ease;
+}
+
+/* ✨ ANIMACIÓN BOTÓN DIRECCIÓN */
+.button.clicked {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+/* 🎵 CONTROLES MÚSICA */
+.music-controls {
+  position: fixed;
+  bottom: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+/* BOTONES MÚSICA */
+.music-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  font-family: "F1589_Humane_Bordeaux W00 Normal";
+  cursor: pointer;
 }
 
 /* ⭐ ESTRELLAS */
@@ -117,10 +144,17 @@ body {
 
   <img src="Untitled1421_20260504195117.png" class="card-img">
 
-  <a class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
+  <a id="direccionBtn" class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
     Dirección
   </a>
 
+</div>
+
+<!-- 🎵 BOTONES MÚSICA -->
+<div class="music-controls">
+  <button class="music-btn" onclick="playMusic()">Play</button>
+  <button class="music-btn" onclick="pauseMusic()">Pause</button>
+  <button class="music-btn" onclick="restartMusic()">Restart</button>
 </div>
 
 <script>
@@ -160,13 +194,18 @@ function restartMusic() {
   music.play();
 }
 
-/* 🎴 ABRIR INVITACIÓN (ARREGLADO) */
+/* 🎴 ABRIR INVITACIÓN */
 function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
 
   music.play().catch(() => {});
 }
+
+/* ✨ CLICK DIRECCIÓN */
+document.getElementById("direccionBtn").addEventListener("click", function() {
+  this.classList.add("clicked");
+});
 
 </script>
 
