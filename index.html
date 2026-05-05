@@ -56,29 +56,6 @@ body {
   transform: scale(0.92);
   filter: brightness(0.85);
 }
-  #musicControls {
-  position: fixed;
-  bottom: 15px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  z-index: 999;
-}
-
-#musicControls button {
-  background: #C8B273;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: white;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-#musicControls button:active {
-  transform: scale(0.95);
-}
 
 /* BOTÓN */
 .button {
@@ -92,13 +69,13 @@ body {
   font-style: italic;
 }
 
-/* ⭐ ESTRELLAS DORADAS */
+/* ⭐ ESTRELLAS */
 .star {
   position: fixed;
   width: 30px;
   height: 30px;
-  background: #C8B273; /* 💛 dorado */
-   clip-path: polygon(
+  background: #C8B273;
+  clip-path: polygon(
     50% 0%,
     61% 35%,
     98% 35%,
@@ -117,7 +94,7 @@ body {
 
 @keyframes fall {
   to {
-    transform: translateY(calc(100vh - 150px)) scale(0);
+    transform: translateY(100vh) scale(0);
     opacity: 0;
   }
 }
@@ -126,51 +103,9 @@ body {
 </head>
 
 <body>
+
+<!-- 🎵 AUDIO -->
 <audio id="music" src="ribslorde.m4a" preload="auto" loop></audio>
-  
-<!-- ⭐ ESTRELLAS -->
-<script>
-function createStar() {
-  const star = document.createElement("div");
-  star.className = "star";
-
-  const x = Math.random() * window.innerWidth;
-  star.style.left = x + "px";
-  star.style.top = "0px";
-
-  document.body.appendChild(star);
-
-  setTimeout(() => star.remove(), 2500);
-}
-
-setInterval(createStar, 180);
-
-  const music = document.getElementById("music");
-
-/* ▶️ play */
-function playMusic() {
-  music.play();
-}
-
-/* ⏸ pause */
-function pauseMusic() {
-  music.pause();
-}
-
-/* 🔁 restart */
-function restartMusic() {
-  music.currentTime = 0;
-  music.play();
-}
-
-/* 🎴 cuando abres invitación */
-function openInvite() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("invitation").classList.remove("hidden");
-
-  music.play().catch(() => {});
-}
-</script>
 
 <!-- 📩 PANTALLA 1 -->
 <div id="home" class="screen">
@@ -189,76 +124,50 @@ function openInvite() {
 </div>
 
 <script>
-function openInvite() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("invitation").classList.remove("hidden");
-}
-</script>
-  <script>
-function createStar(x, y, behind = false) {
+
+/* ⭐ ESTRELLAS */
+function createStar() {
   const star = document.createElement("div");
   star.className = "star";
 
+  const x = Math.random() * window.innerWidth;
   star.style.left = x + "px";
-  star.style.top = y + "px";
-
-  // ⭐ más lento (3s a 6s)
-  const duration = Math.random() * 3 + 3;
-  star.style.animationDuration = duration + "s";
-
-  // ⭐ si es detrás de la carta
-  if (behind) {
-    star.style.zIndex = "0";
-  }
+  star.style.top = "0px";
 
   document.body.appendChild(star);
 
-  setTimeout(() => star.remove(), duration * 1000);
+  setTimeout(() => star.remove(), 2500);
 }
 
-/* ⭐ estrellas al tocar cualquier parte de la pantalla */
-document.addEventListener("touchstart", (e) => {
-  const touch = e.touches[0];
-  createStar(touch.clientX, touch.clientY);
-});
+setInterval(createStar, 180);
 
-/* 🖱️ opcional: también en click en PC */
-document.addEventListener("click", (e) => {
-  createStar(e.clientX, e.clientY);
-});
+/* 🎵 MÚSICA */
+const music = document.getElementById("music");
 
-/* 📱 estrellas al tocar la invitación */
+/* ▶️ play */
+function playMusic() {
+  music.play();
+}
+
+/* ⏸ pause */
+function pauseMusic() {
+  music.pause();
+}
+
+/* 🔁 restart */
+function restartMusic() {
+  music.currentTime = 0;
+  music.play();
+}
+
+/* 🎴 ABRIR INVITACIÓN (ARREGLADO) */
 function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
 
-  // ⭐ música
-  const music = document.getElementById("music");
-  music.play();
-
-  // ⭐ estrellas explosión
-  for (let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      createStar(
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerHeight,
-        true
-      );
-    }, i * 70);
-  }
+  music.play().catch(() => {});
 }
 
-  // ⭐ efecto extra al abrir
-  for (let i = 0; i < 15; i++) {
-    setTimeout(() => {
-      createStar(
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerHeight,
-        true
-      );
-    }, i * 80);
-  }
-}
 </script>
 
 </body>
