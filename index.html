@@ -2,103 +2,93 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Graduation Party</title>
+<title>Invitation</title>
 
-<!-- Graduation font -->
-<link href="https://fonts.cdnfonts.com/css/graduation-2" rel="stylesheet">
-
-<!-- Montserrat -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<!-- FONT BOTÓN -->
+<style>
+@import url(https://db.onlinewebfonts.com/c/0930b33e3b23483beec8d94d6eb3073d?family=F1589_Humane_Bordeaux+W00+Normal);
+</style>
 
 <style>
 
 body {
   margin: 0;
-  background: #C8B273;
+  background: black;
   overflow: hidden;
 }
 
-/* ⭐ ESTRELLAS */
+/* PANTALLAS */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 📩 SOBRE */
+.envelope {
+  width: 260px;
+  cursor: pointer;
+}
+
+/* 🎴 TARJETA */
+.card-img {
+  width: 300px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+.card-img:hover {
+  transform: scale(0.95);
+  filter: brightness(0.9);
+}
+
+.card-img:active {
+  transform: scale(0.92);
+  filter: brightness(0.85);
+}
+
+/* BOTÓN */
+.button {
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: "F1589_Humane_Bordeaux W00 Normal";
+  font-style: italic;
+}
+
+/* ⭐ ESTRELLAS DORADAS */
 .star {
   position: fixed;
   width: 30px;
   height: 30px;
-  background: #000;
+  background: #C8B273; /* 💛 dorado */
   clip-path: polygon(
     50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
     50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
   );
   animation: fall 2.5s linear forwards;
   z-index: 1;
+  opacity: 0.9;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(calc(100vh - 180px)) scale(0);
+    transform: translateY(calc(100vh - 150px)) scale(0);
     opacity: 0;
   }
-}
-
-/* 📱 CONTENEDOR */
-.wrapper {
-  position: relative;
-  z-index: 2;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 🪟 CARD MÁS GRANDE */
-.card {
-  width: 380px;
-  padding: 40px;
-  border-radius: 25px;
-
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-
-  color: white;
-  text-align: center;
-}
-
-/* 🎓 TITULO */
-.title {
-  font-family: 'Graduation', sans-serif;
-  font-size: 56px;
-  margin-bottom: 20px;
-}
-
-/* ✍️ INFO */
-.info {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  margin: 12px 0;
-}
-
-/* BOTONES */
-.button {
-  margin-top: 15px;
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 25px;
-  background: #fff;
-  color: #000;
-  text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-/* BOTÓN SECUNDARIO */
-.secondary {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
 }
 
 </style>
@@ -106,32 +96,7 @@ body {
 
 <body>
 
-<div class="wrapper">
-  <div class="card">
-
-    <div class="title">Grad Party 🎓</div>
-
-    <!-- CONTENIDO DINÁMICO -->
-    <div id="content">
-      <div class="info">📅 June 15, 2026</div>
-      <div class="info">⏰ 6:00 PM</div>
-      <div class="info">📍 Tucson, Arizona</div>
-    </div>
-
-    <a class="button" href="https://maps.google.com" target="_blank">
-      Dirección
-    </a>
-
-    <br>
-
-    <button class="button secondary" onclick="showDressCode()">
-      Dress Code
-    </button>
-
-  </div>
-</div>
-
-<!-- ⭐ SCRIPT -->
+<!-- ⭐ ESTRELLAS -->
 <script>
 function createStar() {
   const star = document.createElement("div");
@@ -147,13 +112,28 @@ function createStar() {
 }
 
 setInterval(createStar, 180);
+</script>
 
-/* 🎯 CAMBIO DE CONTENIDO */
-function showDressCode() {
-  document.getElementById("content").innerHTML = `
-    <div class="info">Color: Negro y Blanco</div>
-    <div class="info">Semi formal</div>
-  `;
+<!-- 📩 PANTALLA 1 -->
+<div id="home" class="screen">
+  <img src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
+</div>
+
+<!-- 🎴 PANTALLA 2 -->
+<div id="invitation" class="screen hidden">
+
+  <img src="Untitled1421_20260504195117.png" class="card-img">
+
+  <a class="button" href="https://maps.google.com" target="_blank">
+    Dirección
+  </a>
+
+</div>
+
+<script>
+function openInvite() {
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("invitation").classList.remove("hidden");
 }
 </script>
 
