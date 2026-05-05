@@ -56,6 +56,29 @@ body {
   transform: scale(0.92);
   filter: brightness(0.85);
 }
+  #musicControls {
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 999;
+}
+
+#musicControls button {
+  background: #C8B273;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#musicControls button:active {
+  transform: scale(0.95);
+}
 
 /* BOTÓN */
 .button {
@@ -103,7 +126,8 @@ body {
 </head>
 
 <body>
-
+<audio id="music" src="ribslorde.m4a" preload="auto" loop></audio>
+  
 <!-- ⭐ ESTRELLAS -->
 <script>
 function createStar() {
@@ -120,6 +144,32 @@ function createStar() {
 }
 
 setInterval(createStar, 180);
+
+  const music = document.getElementById("music");
+
+/* ▶️ play */
+function playMusic() {
+  music.play();
+}
+
+/* ⏸ pause */
+function pauseMusic() {
+  music.pause();
+}
+
+/* 🔁 restart */
+function restartMusic() {
+  music.currentTime = 0;
+  music.play();
+}
+
+/* 🎴 cuando abres invitación */
+function openInvite() {
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("invitation").classList.remove("hidden");
+
+  music.play().catch(() => {});
+}
 </script>
 
 <!-- 📩 PANTALLA 1 -->
