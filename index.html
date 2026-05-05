@@ -232,6 +232,22 @@ function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
 
+  // ⭐ música
+  const music = document.getElementById("music");
+  music.play();
+
+  // ⭐ estrellas explosión
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      createStar(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight,
+        true
+      );
+    }, i * 70);
+  }
+}
+
   // ⭐ efecto extra al abrir
   for (let i = 0; i < 15; i++) {
     setTimeout(() => {
