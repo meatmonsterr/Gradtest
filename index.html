@@ -2,19 +2,80 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación</title>
+<title>Invitation</title>
+
+<!-- FONT BOTÓN -->
+<style>
+@import url(https://db.onlinewebfonts.com/c/0930b33e3b23483beec8d94d6eb3073d?family=F1589_Humane_Bordeaux+W00+Normal);
+</style>
 
 <style>
 
-/* ⭐ ESTRELLAS */
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+
+/* PANTALLAS */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 📩 SOBRE */
+.envelope {
+  width: 700px;
+  cursor: pointer;
+}
+
+/* 🎴 TARJETA */
+.card-img {
+  width: 770px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+.card-img:hover {
+  transform: scale(0.95);
+  filter: brightness(0.9);
+}
+
+.card-img:active {
+  transform: scale(0.92);
+  filter: brightness(0.85);
+}
+
+/* BOTÓN */
+.button {
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: "F1589_Humane_Bordeaux W00 Normal";
+  font-style: italic;
+}
+
+/* ⭐ ESTRELLAS DORADAS */
 .star {
   position: fixed;
-  pointer-events: none;
   width: 30px;
   height: 30px;
-  background: #C8B273;
-  clip-path: polygon(
+  background: #C8B273; /* 💛 dorado */
+   clip-path: polygon(
     50% 0%,
     61% 35%,
     98% 35%,
@@ -26,71 +87,40 @@
     2% 35%,
     39% 35%
   );
-  opacity: 0.9;
+  animation: fall 2.5s linear forwards;
   z-index: 1;
-  animation: fall linear forwards;
+  opacity: 0.9;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(120vh) scale(0.3);
+    transform: translateY(calc(100vh - 150px)) scale(0);
     opacity: 0;
   }
-}
-
-/* 📱 PANTALLAS */
-.screen {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.hidden {
-  display: none;
-}
-
-/* 🎴 IMÁGENES */
-.envelope, .card-img {
-  width: 80%;
-  max-width: 400px;
-  display: block;
-  margin: auto;
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* 🖱️ HOVER SOLO MOUSE */
-@media (hover: hover) and (pointer: fine) {
-  .card-img:hover {
-    transform: scale(0.95);
-    filter: brightness(0.9);
-  }
-}
-
-/* 📱 TAP */
-.card-img:active {
-  transform: scale(0.92);
-  filter: brightness(1.15);
-  box-shadow:
-    0 0 12px rgba(200, 178, 115, 0.6),
-    0 0 25px rgba(200, 178, 115, 0.4);
-}
-
-/* 🔘 BOTÓN */
-.button {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: white;
-  text-decoration: none;
-  background: #C8B273;
-  padding: 10px 20px;
-  border-radius: 10px;
 }
 
 </style>
 </head>
 
 <body>
+
+<!-- ⭐ ESTRELLAS -->
+<script>
+function createStar() {
+  const star = document.createElement("div");
+  star.className = "star";
+
+  const x = Math.random() * window.innerWidth;
+  star.style.left = x + "px";
+  star.style.top = "0px";
+
+  document.body.appendChild(star);
+
+  setTimeout(() => star.remove(), 2500);
+}
+
+setInterval(createStar, 180);
+</script>
 
 <!-- 📩 PANTALLA 1 -->
 <div id="home" class="screen">
@@ -100,7 +130,7 @@
 <!-- 🎴 PANTALLA 2 -->
 <div id="invitation" class="screen hidden">
 
-  <img src="Untitled1421_20260504195117.png" class="card-img" onclick="inviteStars(event)">
+  <img src="Untitled1421_20260504195117.png" class="card-img">
 
   <a class="button" href="https://maps.google.com" target="_blank">
     Dirección
@@ -109,8 +139,12 @@
 </div>
 
 <script>
-
-/* ⭐ CREAR ESTRELLA */
+function openInvite() {
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("invitation").classList.remove("hidden");
+}
+</script>
+  <script>
 function createStar(x, y, behind = false) {
   const star = document.createElement("div");
   star.className = "star";
@@ -118,10 +152,11 @@ function createStar(x, y, behind = false) {
   star.style.left = x + "px";
   star.style.top = y + "px";
 
-  // 🌟 caída más lenta
+  // ⭐ más lento (3s a 6s)
   const duration = Math.random() * 3 + 3;
   star.style.animationDuration = duration + "s";
 
+  // ⭐ si es detrás de la carta
   if (behind) {
     star.style.zIndex = "0";
   }
@@ -131,38 +166,33 @@ function createStar(x, y, behind = false) {
   setTimeout(() => star.remove(), duration * 1000);
 }
 
-/* 📱 TOCAR PANTALLA = ESTRELLAS */
+/* ⭐ estrellas al tocar cualquier parte de la pantalla */
 document.addEventListener("touchstart", (e) => {
-  const t = e.touches[0];
-  createStar(t.clientX, t.clientY);
+  const touch = e.touches[0];
+  createStar(touch.clientX, touch.clientY);
 });
 
-/* 🖱️ CLICK PC */
+/* 🖱️ opcional: también en click en PC */
 document.addEventListener("click", (e) => {
   createStar(e.clientX, e.clientY);
 });
 
-/* 🎴 ABRIR INVITACIÓN + EXPLOSIÓN */
+/* 📱 estrellas al tocar la invitación */
 function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
 
-  for (let i = 0; i < 20; i++) {
+  // ⭐ efecto extra al abrir
+  for (let i = 0; i < 15; i++) {
     setTimeout(() => {
       createStar(
         Math.random() * window.innerWidth,
         Math.random() * window.innerHeight,
         true
       );
-    }, i * 70);
+    }, i * 80);
   }
 }
-
-/* 📱 ESTRELLAS AL TOCAR INVITACIÓN */
-function inviteStars(e) {
-  createStar(e.clientX, e.clientY, true);
-}
-
 </script>
 
 </body>
