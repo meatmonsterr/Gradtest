@@ -25,28 +25,35 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  opacity: 1;
-  transition: opacity 0.6s ease;
 }
 
-.hidden {
-  display: none;
+/* 🎞️ SLIDESHOW */
+#slideshow {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.fade-out {
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 1s ease, transform 2s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* 📩 SOBRE */
 .envelope {
   width: 700px;
   cursor: pointer;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.envelope.opening {
-  transform: scale(1.15);
-  opacity: 0;
 }
 
 /* 🎴 TARJETA */
@@ -61,11 +68,6 @@ body {
 .card-img:hover {
   transform: scale(0.95);
   filter: brightness(0.9);
-}
-
-.card-img:active {
-  transform: scale(0.92);
-  filter: brightness(0.85);
 }
 
 /* BOTÓN */
@@ -103,7 +105,20 @@ body {
   color: white;
   border: 2px solid white;
   font-family: "F1589_Humane_Bordeaux W00 Normal";
-  cursor: pointer;
+}
+
+/* 🖼️ GALERÍA */
+.gallery {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 20px;
+}
+
+.gallery img {
+  height: 150px;
+  border-radius: 10px;
 }
 
 /* ⭐ ESTRELLAS */
@@ -113,16 +128,8 @@ body {
   height: 30px;
   background: #C8B273;
   clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
+    50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,
+    50% 70%,21% 91%,32% 57%,2% 35%,39% 35%
   );
   animation: fall 2.5s linear forwards;
 }
@@ -139,21 +146,28 @@ body {
 
 <body>
 
-<audio id="music" src="ribslorse.m4a" preload="auto" loop></audio>
+<audio id="music" src="ribslorse.m4a" loop></audio>
 
-<!-- 📩 ENVELOPE -->
-<div id="home" class="screen">
-  <img id="envelope" src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
+<!-- 🎞️ SLIDESHOW -->
+<div id="slideshow">
+  <img src="IMG_3569.jpeg" class="slide active">
+  <img src="IMG_3570.jpeg" class="slide">
 </div>
 
 <!-- 🎴 INVITACIÓN -->
-<div id="invitation" class="screen hidden">
+<div id="invitation" class="screen" style="display:none;">
 
-  <img src="Untitled1421_20260504195117.png" class="card-img" onclick="goHome()">
+  <img src="Untitled1421_20260504195117.png" class="card-img">
 
   <a class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
     Address
   </a>
+
+  <!-- 🖼️ GALERÍA -->
+  <div class="gallery">
+    <img src="IMG_3569.jpeg">
+    <img src="IMG_3570.jpeg">
+  </div>
 
   <div class="music-controls">
     <button id="playPauseBtn" class="music-btn" onclick="toggleMusic()">Play</button>
@@ -165,123 +179,79 @@ body {
 <script>
 
 /* ⭐ ESTRELLAS */
-function createStar() {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.left = Math.random() * window.innerWidth + "px";
-  document.body.appendChild(star);
-  setTimeout(() => star.remove(), 2500);
-}
-setInterval(createStar, 180);
+setInterval(() => {
+  const s = document.createElement("div");
+  s.className = "star";
+  s.style.left = Math.random()*100+"vw";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2500);
+},180);
 
 /* 🎵 AUDIO */
 const music = document.getElementById("music");
 const btn = document.getElementById("playPauseBtn");
 
 let started = false;
-let fadeInterval;
 
-/* 🔊 FADE IN REAL */
+/* FADE */
 function fadeInAudio() {
   music.volume = 0;
-
-  clearInterval(fadeInterval);
-
-  fadeInterval = setInterval(() => {
-    if (music.volume < 0.95) {
-      music.volume += 0.03; // más suave
-    } else {
-      music.volume = 1;
-      clearInterval(fadeInterval);
-    }
-  }, 120);
+  let v = 0;
+  const fade = setInterval(()=>{
+    v += 0.02;
+    music.volume = v;
+    if(v>=1) clearInterval(fade);
+  },120);
 }
 
-/* ▶️ / ⏸ */
 function toggleMusic() {
-  if (music.paused) {
-
-    if (!started) {
-      music.currentTime = 47;
-      started = true;
-    }
-
+  if(music.paused){
     music.play();
-    fadeInAudio();
-    btn.textContent = "Pause";
-
+    btn.textContent="Pause";
   } else {
     music.pause();
-    btn.textContent = "Play";
+    btn.textContent="Play";
   }
 }
 
-/* 🔁 restart */
-function restartMusic() {
-  music.currentTime = 47;
-  started = true;
+function restartMusic(){
+  music.currentTime=47;
   music.play();
   fadeInAudio();
-  btn.textContent = "Pause";
+  btn.textContent="Pause";
 }
 
-/* ✉️ ABRIR INVITACIÓN */
-function openInvite() {
+/* 🎞️ SLIDESHOW */
+const slides = document.querySelectorAll(".slide");
+let index = 0;
 
-  const home = document.getElementById("home");
-  const invite = document.getElementById("invitation");
-  const envelope = document.getElementById("envelope");
+function nextSlide(){
+  slides[index].classList.remove("active");
+  index = (index+1)%slides.length;
+  slides[index].classList.add("active");
+}
 
-  envelope.classList.add("opening");
+setInterval(nextSlide, 2500);
 
-  setTimeout(() => {
+/* 🚀 INICIO */
+setTimeout(()=>{
 
-    home.classList.add("fade-out");
+  document.getElementById("slideshow").style.opacity = 0;
 
-    setTimeout(() => {
-      home.classList.add("hidden");
-      invite.classList.remove("hidden");
+  setTimeout(()=>{
+    document.getElementById("slideshow").style.display="none";
+    document.getElementById("invitation").style.display="flex";
+  },1000);
 
-      invite.style.opacity = 0;
-      setTimeout(() => invite.style.opacity = 1, 50);
+},6000);
 
-    }, 600);
-
-  }, 400);
-
-  if (!started) {
-    music.currentTime = 47;
-    started = true;
-  }
-
+/* 🎵 AUTO START */
+setTimeout(()=>{
+  music.currentTime=47;
   music.play();
   fadeInAudio();
-  btn.textContent = "Pause";
-}
-
-/* 🔙 REGRESAR AL SOBRE */
-function goHome() {
-
-  const home = document.getElementById("home");
-  const invite = document.getElementById("invitation");
-  const envelope = document.getElementById("envelope");
-
-  invite.classList.add("fade-out");
-
-  setTimeout(() => {
-    invite.classList.add("hidden");
-    invite.classList.remove("fade-out");
-
-    home.classList.remove("hidden");
-
-    envelope.classList.remove("opening");
-    home.style.opacity = 1;
-
-  }, 600);
-
-  music.pause();
-  btn.textContent = "Play";
-}
+  btn.textContent="Pause";
+},500);
 
 </script>
 
