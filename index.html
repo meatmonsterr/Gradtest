@@ -10,226 +10,133 @@
 
 <style>
 
-body{
-  margin:0;
-  background:black;
-  overflow-x:hidden;
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
 }
 
 /* PANTALLAS */
-.screen{
-  position:absolute;
-  width:100%;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  flex-direction:column;
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 /* 📸 CAROUSEL */
-.carousel{
-  position:absolute;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  width:100%;
-  height:100vh;
+.carousel {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
-.card{
-  position:absolute;
-  width:200px;
-  height:200px;
-  border-radius:20px;
-  object-fit:cover;
-  transition:transform .4s ease, opacity .4s ease;
+.card {
+  position: absolute;
+  width: 200px; /* MÁS GRANDE */
+  height: 200px;
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-.card.center{
-  transform:scale(1.3);
-  z-index:5;
-}
-
-.card.left{
-  transform:translateX(-220px) scale(.9);
-  opacity:.5;
-}
-
-.card.right{
-  transform:translateX(220px) scale(.9);
-  opacity:.5;
-}
-
-.card.hidden{
-  opacity:0;
-}
+.card.center { transform: scale(1.3); z-index: 5; }
+.card.left { transform: translateX(-220px) scale(0.9); opacity: 0.5; }
+.card.right { transform: translateX(220px) scale(0.9); opacity: 0.5; }
+.card.hidden { opacity: 0; }
 
 /* 📩 SOBRE */
-.envelope{
-  width:700px;
-  cursor:pointer;
-}
-
-/* 🎴 INVITACIÓN */
-#invitation{
-  overflow-y:auto;
-  align-items:center;
-  justify-content:flex-start;
-  padding-top:8vh;
-  box-sizing:border-box;
-}
-
-/* 🎴 CONTENIDO CENTRADO */
-.invitation-content{
-  min-height:100vh;
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
+.envelope { width: 700px; cursor: pointer; }
 
 /* 🎴 TARJETA */
-.card-img{
-  width:850px;
-  margin-bottom:30px;
-  cursor:pointer;
-  transition:transform .25s ease, filter .25s ease;
+.card-img {
+  width: 850px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-.card-img:hover{
-  transform:scale(.95);
-  filter:brightness(.9);
+.card-img:hover {
+  transform: scale(0.95);
+  filter: brightness(0.9);
 }
 
 /* BOTÓN */
-.button{
-  padding:12px 30px;
-  border-radius:30px;
-  background:white;
-  color:black;
-  font-family:"F1589_Humane_Bordeaux W00 Normal";
-  font-style:italic;
-  text-decoration:none;
+.button {
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  text-decoration: none;
 }
 
 /* 🎵 CONTROLES */
-.music-controls{
-  position:fixed;
-  bottom:20px;
-  display:flex;
-  gap:15px;
-  z-index:50;
+.music-controls {
+  position: fixed;
+  bottom: 20px;
+  display: flex;
+  gap: 15px;
 }
 
-.music-btn{
-  padding:16px 30px;
-  border-radius:30px;
-  background:transparent;
-  color:white;
-  border:2px solid white;
-  font-family:"F1589_Humane_Bordeaux W00 Normal";
+.music-btn {
+  padding: 16px 30px;
+  border-radius: 30px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
 }
 
-/* 🖼️ GALERÍA FLUX */
-.gallery{
-  width:90%;
-  column-count:4;
-  column-gap:15px;
-  margin-top:40px;
-  padding-bottom:120px;
+/* 🖼️ GALERÍA */
+.gallery {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 20px;
 }
 
-.gallery img{
-  width:100%;
-  margin-bottom:15px;
-  border-radius:10px;
-  display:block;
-  break-inside:avoid;
-  cursor:pointer;
-  object-fit:cover;
-}
-
-/* 📱 RESPONSIVE */
-@media(max-width:900px){
-
-  .gallery{
-    column-count:3;
-  }
-
-  .card-img{
-    width:95%;
-  }
-
-  .envelope{
-    width:95%;
-  }
-}
-
-@media(max-width:600px){
-
-  .gallery{
-    column-count:2;
-  }
-
-  .card-img{
-    width:95%;
-  }
-
-  .envelope{
-    width:95%;
-  }
-
-  .music-btn{
-    padding:12px 20px;
-  }
+.gallery img {
+  height: 150px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 /* 🔍 VIEWER */
-.viewer{
-  position:fixed;
-  top:0;
-  left:0;
+.viewer {
+  position: fixed;
+  top:0;left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,.9);
+  background: rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
   z-index:100;
 }
 
-.viewer img{
+.viewer img {
   max-width:90%;
   max-height:90%;
 }
 
-/* ⭐ ESTRELLAS */
-.star{
-  position:fixed;
-  width:30px;
-  height:30px;
-  background:#C8B273;
-  clip-path:polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
-  animation:fall 2.5s linear forwards;
+/* ⭐ */
+.star {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background: #C8B273;
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  animation: fall 2.5s linear forwards;
 }
 
-@keyframes fall{
-  to{
-    transform:translateY(100vh) scale(0);
-    opacity:0;
-  }
+@keyframes fall {
+  to { transform: translateY(100vh) scale(0); opacity: 0; }
 }
 
 </style>
@@ -239,216 +146,116 @@ body{
 
 <audio id="music" src="ribslorse.m4a" loop></audio>
 
-<!-- 📩 HOME -->
-<div id="home" class="screen" style="justify-content:center;">
-
-  <img 
-    src="Untitled1419_20260504184749.png"
-    class="envelope"
-    onclick="openInvite()"
-  >
-
+<div id="home" class="screen">
+  <img src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
 </div>
 
 <!-- 🎞️ CAROUSEL -->
 <div id="carousel" class="carousel">
-
+  <!-- REPETIDAS -->
   <img src="IMG_3569.jpeg" class="card center">
   <img src="IMG_3570.jpeg" class="card right">
   <img src="IMG_3569.jpeg" class="card left">
-
 </div>
 
-<!-- 🎴 INVITACIÓN -->
 <div id="invitation" class="screen" style="display:none;">
 
-  <!-- CENTRADO -->
-  <div class="invitation-content">
+  <img src="Untitled1421_20260504195117.png" class="card-img">
 
-    <img
-      src="Untitled1421_20260504195117.png"
-      class="card-img"
-    >
-
-    <a class="button" href="#" target="_blank">
-      Address
-    </a>
-
-  </div>
+  <a class="button" href="#" target="_blank">Address</a>
 
   <!-- 🖼️ GALERÍA -->
   <div class="gallery" id="gallery"></div>
 
-  <!-- 🎵 CONTROLES -->
   <div class="music-controls">
-
-    <button
-      id="playPauseBtn"
-      class="music-btn"
-      onclick="toggleMusic()"
-    >
-      Play
-    </button>
-
-    <button
-      class="music-btn"
-      onclick="restartMusic()"
-    >
-      Restart
-    </button>
-
+    <button id="playPauseBtn" class="music-btn" onclick="toggleMusic()">Play</button>
+    <button class="music-btn" onclick="restartMusic()">Restart</button>
   </div>
 
 </div>
 
 <!-- 🔍 VIEWER -->
-<div
-  id="viewer"
-  class="viewer"
-  onclick="closeViewer()"
->
+<div id="viewer" class="viewer" onclick="closeViewer()">
   <img id="viewerImg">
 </div>
 
 <script>
 
-/* ⭐ ESTRELLAS */
+/* ⭐ */
 setInterval(()=>{
-
   const s=document.createElement("div");
-
   s.className="star";
-
   s.style.left=Math.random()*100+"vw";
-
   document.body.appendChild(s);
-
   setTimeout(()=>s.remove(),2500);
-
 },180);
 
-/* 🎵 MUSIC */
+/* 🎵 */
 const music=document.getElementById("music");
 const btn=document.getElementById("playPauseBtn");
 
 function fadeIn(){
-
   music.volume=0;
-
   let v=0;
-
   const f=setInterval(()=>{
-
     v+=0.05;
-
     music.volume=v;
-
     if(v>=1) clearInterval(f);
-
   },80);
 }
 
 function toggleMusic(){
-
-  if(music.paused){
-
-    music.play();
-
-    btn.textContent="Pause";
-
-  }else{
-
-    music.pause();
-
-    btn.textContent="Play";
-  }
+  if(music.paused){ music.play(); btn.textContent="Pause";}
+  else { music.pause(); btn.textContent="Play";}
 }
 
 function restartMusic(){
-
   music.currentTime=47;
-
   music.play();
-
   fadeIn();
 }
 
-/* 🎴 OPEN */
+/* 🎴 */
 function openInvite(){
-
   document.getElementById("home").style.display="none";
-
   const c=document.getElementById("carousel");
-
   c.style.display="flex";
 
   music.currentTime=47;
-
   music.play();
-
   fadeIn();
 
   const cards=document.querySelectorAll(".card");
-
   let i=0;
 
   setInterval(()=>{
-
     cards.forEach(el=>el.className="card hidden");
 
     cards[i%3].className="card center";
-
     cards[(i+1)%3].className="card right";
-
     cards[(i+2)%3].className="card left";
 
     i++;
-
-  },700);
+  },700); /* MÁS RÁPIDO */
 
   setTimeout(()=>{
-
     c.style.display="none";
-
     document.getElementById("invitation").style.display="flex";
-
   },3500);
 
   generateGallery();
 }
 
-/* 🖼️ GALERÍA */
+/* 🖼️ GENERAR GALERÍA */
 function generateGallery(){
-
   const g=document.getElementById("gallery");
+  const imgs=["IMG_3569.jpeg","IMG_3570.jpeg"];
 
-  const imgs=[
-    "IMG_3569.jpeg",
-    "IMG_3570.jpeg"
-  ];
-
-  for(let i=0;i<12;i++){
-
+  for(let i=0;i<10;i++){
     imgs.forEach(src=>{
-
       const img=document.createElement("img");
-
       img.src=src;
-
-      const heights=[
-        "220px",
-        "340px",
-        "180px",
-        "280px",
-        "400px",
-        "250px"
-      ];
-
-      img.style.height=
-        heights[Math.floor(Math.random()*heights.length)];
-
       img.onclick=()=>openViewer(src);
-
       g.appendChild(img);
     });
   }
@@ -456,14 +263,11 @@ function generateGallery(){
 
 /* 🔍 VIEWER */
 function openViewer(src){
-
   document.getElementById("viewer").style.display="flex";
-
   document.getElementById("viewerImg").src=src;
 }
 
 function closeViewer(){
-
   document.getElementById("viewer").style.display="none";
 }
 
