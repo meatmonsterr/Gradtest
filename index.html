@@ -95,34 +95,32 @@ body {
   border: 2px solid white;
 }
 
-/* 🖼️ GALERÍA (GRID MOSAICO) */
+/* 🖼️ GALERÍA (FLUX / MASONRY) */
 .gallery {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  height: 300px;
+  overflow-y: auto;
+  column-count: 4;
+  column-gap: 15px;
   padding: 20px;
-  justify-items: center;
 }
 
 .gallery img {
   width: 100%;
-  max-width: 180px;
+  margin-bottom: 15px;
   border-radius: 10px;
   cursor: pointer;
+  display: block;
+  break-inside: avoid;
 }
 
-/* responsivo */
+/* responsive */
 @media (max-width: 900px) {
-  .gallery {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .gallery { column-count: 3; }
 }
 
 @media (max-width: 600px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .gallery { column-count: 2; }
 }
 
 /* 🔍 VIEWER */
