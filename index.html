@@ -16,6 +16,7 @@ body {
   overflow: hidden;
 }
 
+/* PANTALLAS */
 .screen {
   position: absolute;
   width: 100%;
@@ -24,17 +25,31 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.fade-out {
+  opacity: 0;
 }
 
 .hidden {
   display: none;
 }
 
+/* 📩 SOBRE */
 .envelope {
   width: 700px;
   cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+.envelope.opening {
+  transform: scale(1.2);
+  opacity: 0;
+}
+
+/* 🎴 TARJETA */
 .card-img {
   width: 850px;
   margin-bottom: 30px;
@@ -53,6 +68,7 @@ body {
   filter: brightness(0.85);
 }
 
+/* BOTÓN */
 .button {
   padding: 12px 30px;
   border-radius: 30px;
@@ -71,6 +87,7 @@ body {
   border: 2px solid white;
 }
 
+/* 🎵 CONTROLES MÚSICA */
 .music-controls {
   position: fixed;
   bottom: 20px;
@@ -89,6 +106,7 @@ body {
   cursor: pointer;
 }
 
+/* ⭐ ESTRELLAS */
 .star {
   position: fixed;
   width: 30px;
@@ -126,12 +144,11 @@ body {
 <audio id="music" src="ribslorse.m4a" preload="auto" loop></audio>
 
 <div id="home" class="screen">
-  <img src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
+  <img id="envelope" src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
 </div>
 
 <div id="invitation" class="screen hidden">
 
-  <!-- 👇 AHORA REGRESA AL INICIO -->
   <img src="Untitled1421_20260504195117.png" class="card-img" onclick="goHome()">
 
   <a class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
@@ -151,14 +168,10 @@ body {
 function createStar() {
   const star = document.createElement("div");
   star.className = "star";
-
   star.style.left = Math.random() * window.innerWidth + "px";
-  star.style.top = "0px";
-
   document.body.appendChild(star);
   setTimeout(() => star.remove(), 2500);
 }
-
 setInterval(createStar, 180);
 
 /* 🎵 MÚSICA */
@@ -166,8 +179,23 @@ const music = document.getElementById("music");
 const btn = document.getElementById("playPauseBtn");
 
 let started = false;
+let fadeInterval;
 
-/* ▶️ / ⏸ toggle */
+/* 🎚️ FADE IN AUDIO */
+function fadeInAudio() {
+  music.volume = 0;
+  clearInterval(fadeInterval);
+
+  fadeInterval = setInterval(() => {
+    if (music.volume < 1) {
+      music.volume += 0.05;
+    } else {
+      clearInterval(fadeInterval);
+    }
+  }, 100);
+}
+
+/* ▶️ / ⏸ */
 function toggleMusic() {
   if (music.paused) {
     if (!started) {
@@ -175,6 +203,7 @@ function toggleMusic() {
       started = true;
     }
     music.play();
+    fadeInAudio();
     btn.textContent = "Pause";
   } else {
     music.pause();
@@ -182,32 +211,62 @@ function toggleMusic() {
   }
 }
 
-/* 🔁 restart */
+/* 🔁 */
 function restartMusic() {
   music.currentTime = 47;
   started = true;
   music.play();
+  fadeInAudio();
   btn.textContent = "Pause";
 }
 
-/* 🎴 ABRIR INVITACIÓN */
+/* ✉️ ABRIR INVITACIÓN */
 function openInvite() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("invitation").classList.remove("hidden");
+  const home = document.getElementById("home");
+  const invite = document.getElementById("invitation");
+  const envelope = document.getElementById("envelope");
+
+  envelope.classList.add("opening");
+
+  setTimeout(() => {
+    home.classList.add("fade-out");
+
+    setTimeout(() => {
+      home.classList.add("hidden");
+      invite.classList.remove("hidden");
+
+      invite.style.opacity = 0;
+      setTimeout(() => invite.style.opacity = 1, 50);
+
+    }, 600);
+
+  }, 400);
 
   if (!started) {
     music.currentTime = 47;
     started = true;
   }
 
-  music.play().catch(() => {});
+  music.play().catch(()=>{});
+  fadeInAudio();
   btn.textContent = "Pause";
 }
 
-/* 🔙 VOLVER AL INICIO */
+/* 🔙 REGRESAR */
 function goHome() {
-  document.getElementById("invitation").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
+  const home = document.getElementById("home");
+  const invite = document.getElementById("invitation");
+
+  invite.classList.add("fade-out");
+
+  setTimeout(() => {
+    invite.classList.add("hidden");
+    invite.classList.remove("fade-out");
+
+    home.classList.remove("hidden");
+    home.classList.remove("fade-out");
+
+  }, 600);
 
   music.pause();
   btn.textContent = "Play";
