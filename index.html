@@ -29,12 +29,12 @@ body {
   transition: opacity 0.6s ease;
 }
 
-.fade-out {
-  opacity: 0;
-}
-
 .hidden {
   display: none;
+}
+
+.fade-out {
+  opacity: 0;
 }
 
 /* 📩 SOBRE */
@@ -45,7 +45,7 @@ body {
 }
 
 .envelope.opening {
-  transform: scale(1.2);
+  transform: scale(1.15);
   opacity: 0;
 }
 
@@ -87,7 +87,7 @@ body {
   border: 2px solid white;
 }
 
-/* 🎵 CONTROLES MÚSICA */
+/* 🎵 CONTROLES */
 .music-controls {
   position: fixed;
   bottom: 20px;
@@ -125,8 +125,6 @@ body {
     39% 35%
   );
   animation: fall 2.5s linear forwards;
-  z-index: 1;
-  opacity: 0.9;
 }
 
 @keyframes fall {
@@ -143,10 +141,12 @@ body {
 
 <audio id="music" src="ribslorse.m4a" preload="auto" loop></audio>
 
+<!-- 📩 ENVELOPE -->
 <div id="home" class="screen">
   <img id="envelope" src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
 </div>
 
+<!-- 🎴 INVITACIÓN -->
 <div id="invitation" class="screen hidden">
 
   <img src="Untitled1421_20260504195117.png" class="card-img" onclick="goHome()">
@@ -174,44 +174,49 @@ function createStar() {
 }
 setInterval(createStar, 180);
 
-/* 🎵 MÚSICA */
+/* 🎵 AUDIO */
 const music = document.getElementById("music");
 const btn = document.getElementById("playPauseBtn");
 
 let started = false;
 let fadeInterval;
 
-/* 🎚️ FADE IN AUDIO */
+/* 🔊 FADE IN REAL */
 function fadeInAudio() {
   music.volume = 0;
+
   clearInterval(fadeInterval);
 
   fadeInterval = setInterval(() => {
-    if (music.volume < 1) {
-      music.volume += 0.05;
+    if (music.volume < 0.95) {
+      music.volume += 0.03; // más suave
     } else {
+      music.volume = 1;
       clearInterval(fadeInterval);
     }
-  }, 100);
+  }, 120);
 }
 
 /* ▶️ / ⏸ */
 function toggleMusic() {
   if (music.paused) {
+
     if (!started) {
       music.currentTime = 47;
       started = true;
     }
+
     music.play();
     fadeInAudio();
     btn.textContent = "Pause";
+
   } else {
     music.pause();
     btn.textContent = "Play";
   }
 }
 
-/* 🔁 */
+/* 🔁 restart */
 function restartMusic() {
   music.currentTime = 47;
   started = true;
@@ -222,6 +227,7 @@ function restartMusic() {
 
 /* ✉️ ABRIR INVITACIÓN */
 function openInvite() {
+
   const home = document.getElementById("home");
   const invite = document.getElementById("invitation");
   const envelope = document.getElementById("envelope");
@@ -229,6 +235,7 @@ function openInvite() {
   envelope.classList.add("opening");
 
   setTimeout(() => {
+
     home.classList.add("fade-out");
 
     setTimeout(() => {
@@ -247,15 +254,17 @@ function openInvite() {
     started = true;
   }
 
-  music.play().catch(()=>{});
+  music.play();
   fadeInAudio();
   btn.textContent = "Pause";
 }
 
-/* 🔙 REGRESAR */
+/* 🔙 REGRESAR AL SOBRE */
 function goHome() {
+
   const home = document.getElementById("home");
   const invite = document.getElementById("invitation");
+  const envelope = document.getElementById("envelope");
 
   invite.classList.add("fade-out");
 
@@ -264,7 +273,9 @@ function goHome() {
     invite.classList.remove("fade-out");
 
     home.classList.remove("hidden");
-    home.classList.remove("fade-out");
+
+    envelope.classList.remove("opening");
+    home.style.opacity = 1;
 
   }, 600);
 
