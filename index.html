@@ -70,8 +70,8 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ✨ ANIMACIÓN BOTÓN DIRECCIÓN */
-.button.clicked {
+/* ✨ HOVER DIRECCIÓN */
+.button:hover {
   background: transparent;
   color: white;
   border: 2px solid white;
@@ -145,14 +145,13 @@ body {
 
   <img src="Untitled1421_20260504195117.png" class="card-img">
 
-  <a id="direccionBtn" class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
+  <a class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
     Address
   </a>
 
-  <!-- 🎵 BOTONES MÚSICA (SOLO AQUÍ) -->
+  <!-- 🎵 BOTONES MÚSICA -->
   <div class="music-controls">
-    <button class="music-btn" onclick="playMusic()">Play</button>
-    <button class="music-btn" onclick="pauseMusic()">Pause</button>
+    <button id="playPauseBtn" class="music-btn" onclick="toggleMusic()">Play</button>
     <button class="music-btn" onclick="restartMusic()">Restart</button>
   </div>
 
@@ -178,21 +177,25 @@ setInterval(createStar, 180);
 
 /* 🎵 MÚSICA */
 const music = document.getElementById("music");
+const btn = document.getElementById("playPauseBtn");
 
-/* ▶️ play */
-function playMusic() {
-  music.play();
-}
-
-/* ⏸ pause */
-function pauseMusic() {
-  music.pause();
+/* ▶️ / ⏸ toggle */
+function toggleMusic() {
+  if (music.paused) {
+    music.currentTime = 47;
+    music.play();
+    btn.textContent = "Pause";
+  } else {
+    music.pause();
+    btn.textContent = "Play";
+  }
 }
 
 /* 🔁 restart */
 function restartMusic() {
-  music.currentTime = 0;
+  music.currentTime = 47;
   music.play();
+  btn.textContent = "Pause";
 }
 
 /* 🎴 ABRIR INVITACIÓN */
@@ -200,13 +203,10 @@ function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
 
+  music.currentTime = 47;
   music.play().catch(() => {});
+  btn.textContent = "Pause";
 }
-
-/* ✨ CLICK DIRECCIÓN */
-document.getElementById("direccionBtn").addEventListener("click", function() {
-  this.classList.add("clicked");
-});
 
 </script>
 
