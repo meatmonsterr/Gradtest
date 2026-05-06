@@ -27,7 +27,7 @@ body {
   flex-direction: column;
 }
 
-/* 📸 ANIMACIÓN CENTRAL */
+/* 📸 CAROUSEL */
 .carousel {
   position: absolute;
   display: none;
@@ -39,24 +39,20 @@ body {
 
 .card {
   position: absolute;
-  width: 140px;
-  height: 140px;
-  border-radius: 15px;
+  width: 200px; /* MÁS GRANDE */
+  height: 200px;
+  border-radius: 20px;
   object-fit: cover;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-/* posiciones */
-.card.center { transform: scale(1.2); z-index: 5; }
-.card.left { transform: translateX(-160px) scale(0.9); opacity: 0.6; }
-.card.right { transform: translateX(160px) scale(0.9); opacity: 0.6; }
+.card.center { transform: scale(1.3); z-index: 5; }
+.card.left { transform: translateX(-220px) scale(0.9); opacity: 0.5; }
+.card.right { transform: translateX(220px) scale(0.9); opacity: 0.5; }
 .card.hidden { opacity: 0; }
 
 /* 📩 SOBRE */
-.envelope {
-  width: 700px;
-  cursor: pointer;
-}
+.envelope { width: 700px; cursor: pointer; }
 
 /* 🎴 TARJETA */
 .card-img {
@@ -64,7 +60,6 @@ body {
   margin-bottom: 30px;
   cursor: pointer;
   transition: transform 0.25s ease, filter 0.25s ease;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
 }
 
 .card-img:hover {
@@ -79,16 +74,6 @@ body {
   background: white;
   color: black;
   text-decoration: none;
-  font-size: 18px;
-  font-family: "F1589_Humane_Bordeaux W00 Normal";
-  font-style: italic;
-  transition: all 0.3s ease;
-}
-
-.button:hover {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
 }
 
 /* 🎵 CONTROLES */
@@ -102,11 +87,9 @@ body {
 .music-btn {
   padding: 16px 30px;
   border-radius: 30px;
-  font-size: 20px;
   background: transparent;
   color: white;
   border: 2px solid white;
-  font-family: "F1589_Humane_Bordeaux W00 Normal";
 }
 
 /* 🖼️ GALERÍA */
@@ -121,26 +104,39 @@ body {
 .gallery img {
   height: 150px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
-/* ⭐ ESTRELLAS */
+/* 🔍 VIEWER */
+.viewer {
+  position: fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+}
+
+.viewer img {
+  max-width:90%;
+  max-height:90%;
+}
+
+/* ⭐ */
 .star {
   position: fixed;
   width: 30px;
   height: 30px;
   background: #C8B273;
-  clip-path: polygon(
-    50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,
-    50% 70%,21% 91%,32% 57%,2% 35%,39% 35%
-  );
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
   animation: fall 2.5s linear forwards;
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(100vh) scale(0);
-    opacity: 0;
-  }
+  to { transform: translateY(100vh) scale(0); opacity: 0; }
 }
 
 </style>
@@ -150,33 +146,26 @@ body {
 
 <audio id="music" src="ribslorse.m4a" loop></audio>
 
-<!-- 📩 ENVELOPE -->
 <div id="home" class="screen">
   <img src="Untitled1419_20260504184749.png" class="envelope" onclick="openInvite()">
 </div>
 
-<!-- 📸 ANIMACIÓN -->
+<!-- 🎞️ CAROUSEL -->
 <div id="carousel" class="carousel">
+  <!-- REPETIDAS -->
   <img src="IMG_3569.jpeg" class="card center">
   <img src="IMG_3570.jpeg" class="card right">
   <img src="IMG_3569.jpeg" class="card left">
 </div>
 
-<!-- 🎴 INVITACIÓN -->
 <div id="invitation" class="screen" style="display:none;">
 
   <img src="Untitled1421_20260504195117.png" class="card-img">
 
-  <a class="button" href="https://maps.app.goo.gl/vbqbLUkQrp8ppB4K6?g_st=ic" target="_blank">
-    Address
-  </a>
+  <a class="button" href="#" target="_blank">Address</a>
 
-  <div class="gallery">
-    <img src="IMG_3569.jpeg">
-    <img src="IMG_3570.jpeg">
-    <img src="IMG_3569.jpeg">
-    <img src="IMG_3570.jpeg">
-  </div>
+  <!-- 🖼️ GALERÍA -->
+  <div class="gallery" id="gallery"></div>
 
   <div class="music-controls">
     <button id="playPauseBtn" class="music-btn" onclick="toggleMusic()">Play</button>
@@ -185,9 +174,14 @@ body {
 
 </div>
 
+<!-- 🔍 VIEWER -->
+<div id="viewer" class="viewer" onclick="closeViewer()">
+  <img id="viewerImg">
+</div>
+
 <script>
 
-/* ⭐ ESTRELLAS */
+/* ⭐ */
 setInterval(()=>{
   const s=document.createElement("div");
   s.className="star";
@@ -196,7 +190,7 @@ setInterval(()=>{
   setTimeout(()=>s.remove(),2500);
 },180);
 
-/* 🎵 AUDIO */
+/* 🎵 */
 const music=document.getElementById("music");
 const btn=document.getElementById("playPauseBtn");
 
@@ -204,58 +198,77 @@ function fadeIn(){
   music.volume=0;
   let v=0;
   const f=setInterval(()=>{
-    v+=0.03;
+    v+=0.05;
     music.volume=v;
     if(v>=1) clearInterval(f);
-  },120);
+  },80);
 }
 
 function toggleMusic(){
-  if(music.paused){
-    music.play();
-    btn.textContent="Pause";
-  } else {
-    music.pause();
-    btn.textContent="Play";
-  }
+  if(music.paused){ music.play(); btn.textContent="Pause";}
+  else { music.pause(); btn.textContent="Play";}
 }
 
 function restartMusic(){
   music.currentTime=47;
   music.play();
   fadeIn();
-  btn.textContent="Pause";
 }
 
-/* 🎴 ABRIR */
+/* 🎴 */
 function openInvite(){
-
   document.getElementById("home").style.display="none";
-  const carousel=document.getElementById("carousel");
-  carousel.style.display="flex";
+  const c=document.getElementById("carousel");
+  c.style.display="flex";
 
   music.currentTime=47;
   music.play();
   fadeIn();
-  btn.textContent="Pause";
 
   const cards=document.querySelectorAll(".card");
-
   let i=0;
+
   setInterval(()=>{
-    cards.forEach(c=>c.className="card hidden");
+    cards.forEach(el=>el.className="card hidden");
 
     cards[i%3].className="card center";
     cards[(i+1)%3].className="card right";
     cards[(i+2)%3].className="card left";
 
     i++;
-  },1200);
+  },700); /* MÁS RÁPIDO */
 
   setTimeout(()=>{
-    carousel.style.display="none";
+    c.style.display="none";
     document.getElementById("invitation").style.display="flex";
-  },5000);
+  },3500);
+
+  generateGallery();
+}
+
+/* 🖼️ GENERAR GALERÍA */
+function generateGallery(){
+  const g=document.getElementById("gallery");
+  const imgs=["IMG_3569.jpeg","IMG_3570.jpeg"];
+
+  for(let i=0;i<10;i++){
+    imgs.forEach(src=>{
+      const img=document.createElement("img");
+      img.src=src;
+      img.onclick=()=>openViewer(src);
+      g.appendChild(img);
+    });
+  }
+}
+
+/* 🔍 VIEWER */
+function openViewer(src){
+  document.getElementById("viewer").style.display="flex";
+  document.getElementById("viewerImg").src=src;
+}
+
+function closeViewer(){
+  document.getElementById("viewer").style.display="none";
 }
 
 </script>
