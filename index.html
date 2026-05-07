@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Invitation</title>
 
+<!-- FONT BOTÓN -->
 <style>
 @import url(https://db.onlinewebfonts.com/c/0930b33e3b23483beec8d94d6eb3073d?family=F1589_Humane_Bordeaux+W00+Normal);
 </style>
@@ -16,15 +17,6 @@ body {
   overflow: hidden;
 }
 
-/* 🌈 FONDO ANIMADO */
-#bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
 /* PANTALLAS */
 .screen {
   position: absolute;
@@ -34,7 +26,6 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  z-index: 2;
 }
 
 .hidden {
@@ -53,6 +44,7 @@ body {
   margin-bottom: 30px;
   cursor: pointer;
   transition: transform 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
 }
 
 .card-img:hover {
@@ -78,6 +70,7 @@ body {
   transition: all 0.3s ease;
 }
 
+/* ✨ HOVER DIRECCIÓN */
 .button:hover {
   background: transparent;
   color: white;
@@ -90,9 +83,9 @@ body {
   bottom: 20px;
   display: flex;
   gap: 15px;
-  z-index: 3;
 }
 
+/* BOTONES MÚSICA */
 .music-btn {
   padding: 16px 30px;
   border-radius: 30px;
@@ -107,6 +100,8 @@ body {
 /* ⭐ ESTRELLAS */
 .star {
   position: fixed;
+  width: 30px;
+  height: 30px;
   background: #C8B273;
   clip-path: polygon(
     50% 0%,
@@ -120,14 +115,14 @@ body {
     2% 35%,
     39% 35%
   );
-  animation: fall 3s linear forwards;
+  animation: fall 2.5s linear forwards;
   z-index: 1;
   opacity: 0.9;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(110vh) scale(0);
+    transform: translateY(100vh) scale(0);
     opacity: 0;
   }
 }
@@ -136,9 +131,6 @@ body {
 </head>
 
 <body>
-
-<!-- 🌈 FONDO -->
-<div id="bg"></div>
 
 <!-- 🎵 AUDIO -->
 <audio id="music" src="ribslorse.m4a" preload="auto" loop></audio>
@@ -157,6 +149,7 @@ body {
     Address
   </a>
 
+  <!-- 🎵 BOTONES MÚSICA -->
   <div class="music-controls">
     <button id="playPauseBtn" class="music-btn" onclick="toggleMusic()">Play</button>
     <button class="music-btn" onclick="restartMusic()">Restart</button>
@@ -166,61 +159,28 @@ body {
 
 <script>
 
-/* ⭐ ESTRELLAS (tamaño random) */
+/* ⭐ ESTRELLAS */
 function createStar() {
   const star = document.createElement("div");
   star.className = "star";
 
-  const size = Math.random() * 25 + 10; // 👈 tamaños variados
-  star.style.width = size + "px";
-  star.style.height = size + "px";
-
-  star.style.left = Math.random() * window.innerWidth + "px";
+  const x = Math.random() * window.innerWidth;
+  star.style.left = x + "px";
   star.style.top = "0px";
-
-  star.style.opacity = Math.random() * 0.8 + 0.2;
 
   document.body.appendChild(star);
 
-  setTimeout(() => star.remove(), 3000);
+  setTimeout(() => star.remove(), 2500);
 }
 
-setInterval(createStar, 120);
-
-
-/* 🌈 FONDO DINÁMICO */
-const bg = document.getElementById("bg");
-
-const gradients = [
-  "linear-gradient(to bottom, black, #ff0000)",
-  "linear-gradient(to bottom, black, #00ff00)",
-  "linear-gradient(to bottom, black, #0066ff)",
-  "linear-gradient(to bottom, black, #ff7a00)",
-  "linear-gradient(to bottom, black, #a100ff)",
-];
-
-let i = 0;
-
-function changeBackground() {
-  bg.style.opacity = 0;
-
-  setTimeout(() => {
-    bg.style.background = gradients[i];
-    bg.style.opacity = 1;
-
-    i = (i + 1) % gradients.length;
-  }, 800);
-}
-
-setInterval(changeBackground, 3500);
-changeBackground();
-
+setInterval(createStar, 180);
 
 /* 🎵 MÚSICA */
 const music = document.getElementById("music");
 const btn = document.getElementById("playPauseBtn");
 let started = false;
 
+/* ▶️ / ⏸ toggle */
 function toggleMusic() {
   if (music.paused) {
     if (!started) {
@@ -234,19 +194,22 @@ function toggleMusic() {
     music.pause();
     btn.textContent = "Play";
   }
+
 }
+
+/* 🔁 restart */
 
 function restartMusic() {
   started = true;
   music.play();
   btn.textContent = "Pause";
+
 }
 
 /* 🎴 ABRIR INVITACIÓN */
 function openInvite() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("invitation").classList.remove("hidden");
-
   if (!started) {
     music.currentTime = 47;
     started = true;
